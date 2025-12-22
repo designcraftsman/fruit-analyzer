@@ -1,11 +1,11 @@
 {
-    "name": "fruit_quality_detector",
-    "short_name": "fruit_quality_detector",
+    "name": "Fruit Quality Detector",
+    "short_name": "FQD",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#27042E",
+    "theme_color": "#B170CC",
+    "description": "AI-powered fruit quality analysis with disease detection and ripeness assessment.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

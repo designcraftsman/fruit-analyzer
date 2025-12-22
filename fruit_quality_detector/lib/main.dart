@@ -1,7 +1,15 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:fruit_quality_detector/home_page.dart';
+import 'package:fruit_quality_detector/screens/auth_gate.dart';
+import 'package:fruit_quality_detector/theme/app_theme.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Hide framework error widgets from the UI (e.g. red error screens).
+  ErrorWidget.builder = (details) => const SizedBox.shrink();
+
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -12,34 +20,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Fruit Quality Detector',
-      theme: ThemeData(
-        brightness: Brightness.dark,
-        primaryColor: Colors.blueGrey,
-        scaffoldBackgroundColor: const Color(0xFF121212),
-        cardColor: const Color(0xFF1E1E1E),
-        textTheme: const TextTheme(
-          bodyLarge: TextStyle(color: Colors.white),
-          bodyMedium: TextStyle(color: Colors.white70),
-          headlineMedium: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
-          titleLarge: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.blueGrey[600],
-            foregroundColor: Colors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-          ),
-        ),
-      ),
-      home: const HomePage(),
+      theme: AppTheme.darkTheme,
+      home: const AuthGate(),
       debugShowCheckedModeBanner: false,
     );
   }
