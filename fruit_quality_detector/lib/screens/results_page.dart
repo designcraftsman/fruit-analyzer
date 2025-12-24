@@ -2,6 +2,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fruit_quality_detector/theme/app_theme.dart';
 import 'package:fruit_quality_detector/widgets/gradient_button.dart';
+import 'package:fruit_quality_detector/widgets/voice_chat_modern_widget.dart';
+import 'package:fruit_quality_detector/models/fruit_analysis.dart';
 
 class ResultsPage extends StatelessWidget {
   final File image;
@@ -130,6 +132,39 @@ class ResultsPage extends StatelessWidget {
     }
   }
 
+  void _openVoiceChat(BuildContext context) {
+    // Create FruitAnalysis object
+    final analysis = FruitAnalysis(
+      fruitType: fruitType,
+      ripeness: ripeness,
+      disease: disease,
+      fruitDescription: _getFruitDescription(fruitType),
+      ripenessExplanation: _getRipenessExplanation(ripeness),
+      diseaseExplanation: _getDiseaseExplanation(disease),
+    );
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => DraggableScrollableSheet(
+        initialChildSize: 0.9,
+        minChildSize: 0.5,
+        maxChildSize: 0.95,
+        builder: (context, scrollController) => Container(
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+          ),
+          child: VoiceChatModernWidget(
+            fruitAnalysis: analysis,
+            autoSpeakResponses: false,
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -211,6 +246,15 @@ class ResultsPage extends StatelessWidget {
                         color: _getDiseaseColor(disease),
                       ),
                       const SizedBox(height: 32),
+
+                      // Voice Chat Button
+                      GradientButton(
+                        text: 'Ask AI About This Fruit',
+                        icon: Icons.mic,
+                        onPressed: () => _openVoiceChat(context),
+                        height: 56,
+                      ),
+                      const SizedBox(height: 16),
 
                       // Action Button
                       GradientButton(
